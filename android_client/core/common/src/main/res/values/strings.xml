@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Money Care</string>
+
+    <!-- Auth Exception Messages -->
+    <string name="error_invalid_credentials">Invalid email or password.</string>
+    <string name="error_user_not_found">User account not found.</string>
+    <string name="error_email_already_in_use">The email address is already in use by another account.</string>
+    <string name="error_invalid_token">Authentication token is invalid or expired.</string>
+    <string name="error_google_sign_in_failed">Google Sign-In failed.</string>
+    <string name="error_user_null_after_auth">User authentication failed. User is null.</string>
+    <string name="error_unauthenticated">User is not authenticated. Please log in.</string>
+
+    <!-- General Exception Messages -->
+    <string name="error_network">Network error. Please check your internet connection.</string>
+    <string name="error_unknown">An unknown error occurred. Please try again.</string>
+</resources>
