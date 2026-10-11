@@ -1,20 +1,14 @@
 package com.hoang.auth.config
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
-import com.hoang.auth.BuildConfig
 import com.hoang.auth.data.local.pref.ProfilePref
 import com.hoang.auth.data.local.pref.TokenPref
-import com.hoang.auth.data.remote.retrofit.ProfileJsonApiService
-import com.hoang.auth.data.remote.retrofit.ProfileProtoApiService
 import com.hoang.auth.data.repository.AuthRepositoryImpl
 import com.hoang.auth.data.repository.TokenRepositoryImpl
 import com.hoang.auth.data.repository.profile.ProfileFireBaseRepositoryImpl
 import com.hoang.auth.data.repository.profile.ProfileHybridRepositoryImpl
-import com.hoang.auth.data.repository.profile.ProfileJsonRepositoryImpl
 import com.hoang.auth.data.repository.profile.ProfilePrefRepositoryImpl
-import com.hoang.auth.data.repository.profile.ProfileProtoRepositoryImpl
 import com.hoang.auth.domain.entity.Profile
 import com.hoang.auth.domain.repository.AuthRepository
 import com.hoang.auth.domain.repository.ProfilePrefRepository
@@ -41,10 +35,6 @@ object RepositoryConfig : BaseConfig {
 
     @Provides
     @Singleton
-    fun provideFirebaseDatabase(): FirebaseDatabase = FirebaseDatabase.getInstance(BuildConfig.FIREBASE_DATABASE_URL)
-
-    @Provides
-    @Singleton
     fun provideAuthRepository(firebaseAuth: FirebaseAuth): AuthRepository = AuthRepositoryImpl(firebaseAuth)
 
     @Provides
@@ -61,14 +51,10 @@ object RepositoryConfig : BaseConfig {
     fun provideProfileRepositories(
         firestore: FirebaseFirestore,
         userIdProvider: UserIdProvider,
-        jsonApiService: ProfileJsonApiService,
-        protoApiService: ProfileProtoApiService,
     ): Map<DataSource, @JvmSuppressWildcards BaseCrudRepository<Profile, String>> =
         mapOf(
             DataSource.FireBase to
                 ProfileFireBaseRepositoryImpl(firestore.collection(FireBasePaths.USER_PROFILES), userIdProvider),
-            DataSource.SpringJson to ProfileJsonRepositoryImpl(jsonApiService),
-            DataSource.SpringProto to ProfileProtoRepositoryImpl(protoApiService),
         )
 
     @Provides

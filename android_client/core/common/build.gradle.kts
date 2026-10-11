@@ -9,7 +9,6 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.android.junit5)
     alias(libs.plugins.google.service.plugin)
-    alias(libs.plugins.google.protobuf)
 }
 
 configure<LibraryExtension> {
@@ -57,24 +56,6 @@ ksp {
     arg("hilt.correctErrorTypes", "true")
 }
 
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:${libs.versions.protobufVersion.get()}"
-    }
-    generateProtoTasks {
-        all().forEach { task ->
-            task.builtins {
-                create("java") {
-                    option("lite")
-                }
-                create("kotlin") {
-                    option("lite")
-                }
-            }
-        }
-    }
-}
-
 dependencies {
 
     // --- AndroidX & Core ---
@@ -112,9 +93,6 @@ dependencies {
 
     // --- Networking & Utilities Bundle ---
     implementation(libs.bundles.networking)
-    implementation(libs.retrofit.converter.protobuf)
-    implementation(libs.protobuf.javalite)
-    implementation(libs.protobuf.kotlinlite)
     implementation(libs.prettytime)
     implementation(libs.process.phoenix)
 

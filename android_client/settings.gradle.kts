@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":core:media")
+
+
 pluginManagement {
     repositories {
         google {
@@ -33,3 +36,4 @@ include(":apps:phone")
 // Core
 include(":core:common")
 include(":core:auth")
+include(":core:new-pipe")

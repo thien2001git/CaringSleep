@@ -1,7 +1,6 @@
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import com.google.protobuf.gradle.id
-import com.google.protobuf.gradle.proto
+
 
 plugins {
     alias(libs.plugins.android.library)
@@ -12,7 +11,6 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.android.junit5)
     alias(libs.plugins.google.service.plugin)
-    alias(libs.plugins.google.protobuf)
 }
 
 configure<LibraryExtension> {
@@ -46,14 +44,6 @@ configure<LibraryExtension> {
         }
     }
 
-    sourceSets {
-        getByName("main") {
-            proto {
-                srcDir("$rootDir/../proto")
-            }
-        }
-    }
-
     compileOptions {
         sourceCompatibility = rootProject.extra["sourceCompatibility"] as JavaVersion
         targetCompatibility = rootProject.extra["targetCompatibility"] as JavaVersion
@@ -62,24 +52,6 @@ configure<LibraryExtension> {
         compose = true
         buildConfig = true
         aidl = true
-    }
-}
-
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:${libs.versions.protobufVersion.get()}"
-    }
-    generateProtoTasks {
-        all().forEach { task ->
-            task.builtins {
-                id("java") {
-                    option("lite")
-                }
-                id("kotlin") {
-                    option("lite")
-                }
-            }
-        }
     }
 }
 
@@ -133,8 +105,6 @@ dependencies {
     implementation(libs.bundles.networking)
     implementation(libs.prettytime)
     implementation(libs.process.phoenix)
-    implementation(libs.protobuf.javalite)
-    implementation(libs.protobuf.kotlinlite)
 
     // --- Unit Testing Bundle ---
     testImplementation(libs.bundles.testing.unit)
